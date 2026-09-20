@@ -1,0 +1,5 @@
+name = "decayingpineapples"
+pages_build_output_dir = "."
+
+[pages]
+navigation_fallback = "index.html"
