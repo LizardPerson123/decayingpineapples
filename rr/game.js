@@ -215,7 +215,7 @@ async function startGameLink(newCampaign=false) {
     return
   }
 
-  const localMultiplayerPlayers = localMultiplayer ? numberOfPeoplePlaying() : 0
+  const localMultiplayerPlayers = localMultiplayer ? await numberOfPeoplePlaying() : 0
   historyPush(localMultiplayerPlayers, difficulty, gameMode)
 
   reload()
