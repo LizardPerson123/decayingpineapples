@@ -1,0 +1,61 @@
+body {font-family: "Comic Sans MS", sans-serif;}
+
+p {font-size: 2em;}
+
+body {text-align: center;}
+
+.introText {font-size: 1.4em; margin-top: 0px; margin-bottom: 0px;}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4em;
+}
+
+.infoText {
+  margin-bottom: 0em;
+}
+
+#optionImg:hover {
+  cursor: pointer;
+}
+
+.option {
+  font-size: 1em; 
+  border: none; 
+  background-color: black; 
+  border-radius: 0.3em; 
+  color: white; 
+  box-shadow: 10px 10px 5px rgba(0, 0,0,0.5);
+  padding: 0.3em;
+}
+
+#ebolaCanvas {
+  font-size: 2em;
+  text-align: center;
+}
+
+#difficulty, #chooseYourFighter {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+#achiLists div:hover {opacity: 0.8;}
+
+#start1, #start2, #start3, #op1, #op2, #op3, #op4, #op5 {
+  width: 100%;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  #start1:hover, #start2:hover, #start3:hover, #op1:hover, #op2:hover, #op3:hover, #op4:hover, #op5:hover {
+    opacity: 0.8;
+    width: 80%;
+  }
+}

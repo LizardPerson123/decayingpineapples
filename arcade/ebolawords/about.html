@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ebola Words</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="dropdown.css">
+  <link rel="icon" type="image/icon-x" href="ebola.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+  <style id="dropdivStyle"></style>
+
+  <script>
+    window.addEventListener("pageshow", function() {
+      const urlParams = new URLSearchParams(window.location.search)
+      const origin = urlParams.get('origin')
+
+      if (origin == "rotpear") {
+        getById("back").href = "../index.html"
+      }
+      else if (origin == "about") {
+        getById("back").href = "../about.html"
+      }
+    })
+  </script>
+</head>
+<body>
+  <div id="dropdiv" style="position: absolute; top: 10px; left: 10px;">
+    <div class="dropdown">
+    <button class="dropbtn" id="dropText">Options</button>
+      <div class="dropdown-content">
+        <a class="altChange" href="javascript:ChangeMode()">Mode</a>
+        <a id="back" class="altChange" href="index.html">Back To Game</a>
+      </div>
+    </div>
+  </div>
+  <h1 style="font-size: 4em; margin-top: 10px; margin-bottom: -20px;">Ebola Words</h1>
+  <h1 style="margin-top: 2em;">Classic</h1>
+  <p>Ebola Words Is A Game Where You Have Text That You Have To Cure Of Ebola</p>
+  <p>When You Play Classic Mode, You Will Be Given The First Sentence Of A Random Wikipedia Article</p>
+  <p>Very Quickly, Words Will Get Ebola (and turn red)</p>
+  <p>In Order To "Cure" These Words, You Must Click Them</p>
+  <p>After You Cure 10 Words, The Text Will Expand Into A Second Paragraph</p>
+  <p>The Article Will Continue To Get Bigger Every 10 Words</p>
+  <p>After Curing 30 Words, You Will Unlock A Wipeout</p>
+  <p>A Wipeout Will Cure All Words Of Ebola, And Can Be Used If You're Ever In Trouble</p>
+  <p>If 10 Words Get Ebola At The Same Time, You Lose</p>
+
+  <h1 style="margin-top: 2em;">Triple Ebola</h1>
+  <p>Triple Ebola Is Similar To Ebola Words, Except Words Can Get Double And Triple Ebola</p>
+  <p>When A Word Gets Double Ebola, You Will Have To Click It Twice</p>
+  <p>When A Word Get Triple Ebola, You Will Have To Click It Three Times</p>
+
+  <h1 style="margin-top: 2em;">Time Attack</h1>
+  <p>In Time Attack, You'll Have A Timer Counting Down</p>
+  <p>When It Reaches Zero, You Lose</p>
+  <p>You'll Be Given A Small Amount Of Text With 10 Words With Ebola</p>
+  <p>When You Click (cure) All Ten, The Timer Will Increase A Bit, But There Will Be More Text And More Words With Ebola</p>
+  
+  <script src="index.js"></script>
+  <script src="setup.js"></script>
+  <script src="httphandler.js"></script>
+  <script src="wordmanager.js"></script>
+  <script src="utility.js"></script>
+  <script src="main.js"></script>
+  <script src="dropdown.js"></script>
+ 
+</body>
+</html>

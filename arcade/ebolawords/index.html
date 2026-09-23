@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ebola Words</title>
+  <style id="dropdivStyle"></style>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="dropdown.css">
+  <link rel="icon" type="image/icon-x" href="ebola.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="dropdiv" style="position: absolute; top: 10px; left: 10px;">
+    <div class="dropdown">
+    <button class="dropbtn" id="dropText">Options</button>
+      <div class="dropdown-content">
+        <a class="altChange" href="javascript:ChangeMode()">Mode</a>
+        <a class="altChange" href="leaderboard.html">Leaderboard</a>
+        <a class="altChange" href="about.html">How To Play</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="achiLists" style="position: absolute; top: 20px; right: 0px; display: flex; flex-direction: column; gap: 20px">
+  
+  </div>
+
+  <div class="header" style="margin-bottom: 2em;">
+    <h1 id="ebolaWords" style="font-size: 4em; margin-top: 10px; margin-bottom: -20px;">Ebola Words</h1>
+    <p class="infoText" id="selectedMode">Selected Mode: None</p>
+    <p class="infoText" id="score" style="display: none;">Score: 0</p>
+    <p class="infoText" id="ebola" style="display: none;">Words With Ebola: 0</p>
+    <p class="infoText" id="time" style="display: none;">Time Left: 30</p>
+    <p class="infoText" id="highscore">High Score: 0</p>
+    <button id="wipeout" style="display: none; border: solid; color: red; font-size: 1.5em; margin-top: 20px;" onclick="wipeout()">Wipeout</button>
+  </div>
+
+  <div id="ebolaCanvas">
+    <p id="start" style="display: none; font-size: 1em;"></p>
+    <p id="coolTip" style="display: none; font-size: 0.9em; color: green;"></p>
+
+    <div id="difficulty" style="display: none;">
+      <button id="start1" style="text-decoration: none; display: block; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #34eb3a; font-size: 1.3em; background: none; border: solid;" onclick="text = start(0).then(value => text = value)">Easy Mode</button>
+      <button id="start2" style="text-decoration: none; display: block; font-family: cursive; color: #e5eb34; font-size: 1.3em; background: none; border: solid;" onclick="text = start(1).then(value => text = value)">Normal Mode</button>
+      <button id="start3" style="text-decoration: none; display: block; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: red; font-size: 1.3em; background: none; border: solid;" onclick="text = start(2).then(value => text = value)">Hard Mode</button>
+    </div>
+
+    <div id="chooseYourFighter">
+      <button id="op1" style="text-decoration: none; display: block; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: rgb(34, 197, 107); font-size: 1.3em; background: none; border: solid;" onclick="getById('selectedMode').innerHTML = 'Selected Mode: Classic'; gamemode = 'classic'; getById('chooseYourFighter').style.display = 'none'; getById('difficulty').style.display = 'flex';">Classic</button>
+      <button id="op2" style="text-decoration: none; display: block; font-family: cursive; color: blueviolet; font-size: 1.3em; background: none; border: solid;" onclick="getById('selectedMode').innerHTML = 'Selected Mode: Triple Ebola'; gamemode = 'triple'; getById('chooseYourFighter').style.display = 'none'; getById('highscore').innerHTML = 'High Score: ' + (localStorage.getItem('highscoretriple') || 0); getById('difficulty').style.display = 'flex'">Triple Ebola</button>
+      <button id="op3" style="text-decoration: none; display: block; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: red; font-size: 1.3em; background: none; border: solid;" onclick="getById('selectedMode').innerHTML = 'Selected Mode: Time Attack'; gamemode = 'attack'; getById('highscore').innerHTML = 'High Score: ' + (localStorage.getItem('highscoreattack') || 0); getById('chooseYourFighter').style.display = 'none'; text = start(0).then(value => text = value)">Time Attack</button>
+      <button id="op4" style="text-decoration: none; display: block; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: gray; font-size: 1.3em; background: none; border: solid;" onclick="window.location.href = 'about.html'">How To Play</button>
+    </div>
+
+    <noscript>Please Enable Javascript</noscript>
+  </div>
+
+  <div id="submitScore" style="display: none; text-align: center;">
+    <label for="username" style="font-size: 1.5em; margin-bottom: 10px;">Username:</label><br>
+    <input type="text" id="username" name="username" style="width: 60%; border: solid; margin-bottom: 2em; border-radius: 1.5em; font-size: 1.5em; padding-top: 10px; padding-bottom: 10px; text-align: center;"><br>
+    <label for="password" style="font-size: 1.5em; margin-bottom: 10px;">Password:</label><br>
+    <input type="text" id="password" name="password" style="width: 60%; border: solid; margin-bottom: 2em; border-radius: 1.5em; font-size: 1.5em; padding-top: 10px; padding-bottom: 10px; text-align: center;"><br>
+    <button id="submit" style="border: solid; color: blueviolet; font-size: 1.5em;">Submit Score</button>
+  </div>
+  
+  <script src="index.js"></script>
+  <script src="setup.js"></script>
+  <script src="httphandler.js"></script>
+  <script src="wordmanager.js"></script>
+  <script src="utility.js"></script>
+  <script src="main.js"></script>
+  <script src="rotextensions.js"></script>
+  <script src="dropdown.js"></script>
+</body>
+</html>
