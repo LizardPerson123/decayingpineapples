@@ -1,0 +1,252 @@
+#game {
+  justify-content: center;
+  gap: 5px;
+  display: none
+}
+
+#tooSmall {display: none;}
+
+#players, #messages, #innerPlayers {
+  flex-direction: column;
+}
+
+#lives {
+  display: flex;
+}
+
+#campaignOptions {
+  display: flex;
+}
+
+.enemyOption {
+  cursor: pointer;
+}
+
+body {overscroll-behavior: none;}
+
+#imgMode {top: 0px;}
+
+#statusEffects, #players, #events, #centerThing, #lives, #campaignOptions, #messages, #collapsedCenterThing {overflow: scroll;}
+
+.startButton {color: black;}
+
+.largeButton {width: 15em !important;}
+
+#buttonSet1Grid {
+  display: grid; 
+}
+
+#buttonSet1Alt {
+  display: none;
+}
+
+#buttonsdiv {
+  display: none;
+}
+
+@media screen and (max-width: 900px) and (min-width: 550px)  {
+  #statusEffects h1, #players h1, #lives {display: none;}
+  #statusEffects {grid-area: 1/1/5/1 !important}
+  #events {height: 25vh !important; background-clip: content-box; padding-bottom: 20px;}
+  #playerText, #msgPreview {display: none;}
+  #showMsgButton {margin-top: 1em;}
+  #chooseAlcohol {display: none;}
+
+}
+
+@media screen and (max-width: 550px) {
+  #game {
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-height: 100vh;
+  }
+
+  #chooseAlcohol {display: none;}
+
+  #lives, #campaignOptions {display: none;}
+
+  #innerPlayers img {
+    width: 1.5em;
+  }
+
+  #statusEffects {
+    height: 25vh;
+    order: 2;
+  }
+
+  #imgMode {display: none;}
+
+  #events {
+    height: 32vh;
+  }
+
+  #centerThing {
+    height: 47vh;
+  }
+
+  #showMsgButton {margin-top: 1em;}
+
+  #players {height: 20vh;}
+
+  #players {order: 1;}
+
+  #events {order: 4;}
+
+  #centerThing {order: 3;}
+
+  #innerPlayers {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #playerText, #msgPreview {
+    display: none;
+  }
+
+  #buttons, #alcoholButtons, #shootButtons {
+    margin-bottom: 5px;
+  }
+
+  #statusEffects {
+    display: none;
+  }
+
+  #players {
+    display: none;
+  }
+
+  #buttonsdiv {
+    display: flex;
+  }
+
+  #innerPlayers {
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-width: 200px), (max-height: 190px) {
+  * {display: none !important;}
+
+  #tooSmall, html, body {
+    display: block !important;
+    background-image: none !important;
+  }
+}
+
+@media screen and (max-height: 850px) and (max-width: 550px) {
+  #events {
+    height: 40vh;
+  }
+
+  #players {height: 23vh;}
+
+  #statusEffects {
+    height: 30vh;
+  }
+}
+
+@media screen and (max-height: 640px) and (max-width: 550px)  {
+  #events {
+    height: 45vh;
+  }
+
+  #players {height: 28vh;}
+
+  #statusEffects {
+    height: 35vh;
+  }
+}
+
+@media screen and (max-height: 500px) and (max-width: 550px)  {
+  #events {
+    height: 40vh;
+  }
+}
+
+@media screen and (max-height: 700px) and (min-width: 550px) and (max-width: 900px) {
+  #events {
+    height: 40vh !important;
+  }
+}
+
+@media screen and (max-height: 550px) and (min-width: 550px) and (max-width: 900px) {
+  #events {
+    height: 50vh !important;
+  }
+}
+
+@media screen and (max-height: 500px) and (min-width: 550px) and (max-width: 900px) {
+  #events {
+    height: 60vh !important;
+  }
+}
+
+@media screen and (max-height: 350px) and (min-width: 550px) and (max-width: 900px) {
+  #events {
+    height: 65vh !important;
+  }
+}
+
+@media screen and (max-height: 300px) and (min-width: 550px) and (max-width: 900px) {
+  #events {
+    height: 70vh !important;
+  }
+}
+
+@media screen and (max-height: 260px) and (min-width: 550px) and (max-width: 900px) {
+  #events {
+    height: 85vh !important;
+  }
+}
+
+@media screen and (max-height: 230px) and (min-width: 550px) and (max-width: 900px) {
+  #events {
+    height: 55vh !important;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .largeButton {width: 10em !important;}
+}
+
+@media screen and (max-height: 650px) and (min-width: 900px) {
+  #events {
+    height: 35vh;
+  }
+}
+
+@media screen and (max-height: 550px) and (min-width: 900px) {
+  #events {
+    height: 38vh;
+  }
+}
+
+@media screen and (max-height: 450px) and (min-width: 900px) {
+  #events {
+    height: 41vh;
+  }
+}
+
+@media screen and (max-width: 720px), (max-height: 650px) {
+  #buttonSet1Grid {
+    display: none;
+  }
+
+  #buttonSet1Alt {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .mobileNavDiv {
+    font-size: 0;
+  }
+}
+
+@media (hover: hover) {
+  #achiLists div:hover {opacity: 0.8;}
+
+  .enemyOption:hover, .campaignOption:hover {opacity: 0.6; cursor: pointer}
+}
