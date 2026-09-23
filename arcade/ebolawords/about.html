@@ -17,11 +17,11 @@
       const urlParams = new URLSearchParams(window.location.search)
       const origin = urlParams.get('origin')
 
-      if (origin == "rotpear") {
-        getById("back").href = "../"
+      if (origin === "rotpear") {
+        getById("back").href = "../../ac"
       }
-      else if (origin == "about") {
-        getById("back").href = "../../about"
+      else if (origin === "about") {
+        getById("back").href = "../../about/games"
       }
     })
   </script>
