@@ -220,8 +220,8 @@
       const urlParams = new URLSearchParams(window.location.search)
       const origin = urlParams.get('origin')
 
-      if (origin === "rotpear") {howToPlay(); getById("back").onclick = () => {window.location.href = "../index.html"}}
-      else if (origin === "about") {howToPlay(); getById("back").onclick = () => {window.location.href = "../about.html"}}
+      if (origin === "rotpear") {howToPlay(); getById("back").onclick = () => {window.location.href = "../"}}
+      else if (origin === "about") {howToPlay(); getById("back").onclick = () => {window.location.href = "../about/games"}}
       else if (origin === "autoplay") {
         autoplay = true
         difficulty = urlParams.get('d')
