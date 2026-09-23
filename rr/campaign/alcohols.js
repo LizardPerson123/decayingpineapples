@@ -1,0 +1,73 @@
+class SuperBeer extends Beer {
+  constructor() {
+    super()
+    this.AlcoholEffect.turns = getRndInt(2, 4)
+    this.name = "Super Beer"
+    this.description = `Guranteed Lives For 2-3 Turns`
+    this.shortDescription = this.description
+    this.whenUsedDesc = `Guranteed Lives For ${this.AlcoholEffect.turns} Turns`
+    this.img = "superbeer.png"
+  }
+
+  oname = "SuperBeer"
+}
+
+class SuperBrandy extends Brandy {
+  constructor() {
+    super()
+    this.name = "Super Brandy"
+    this.shortDescription = "Give A Player Forced Alcohols"
+    this.description = "Give A Player Forced Alcohols; If They Shoot Themselves Then It Is Live"
+    this.img = "superbrandy.png"
+
+    const effectMsg = "Forced Alcohols"
+    const effectTurns = this.AlcoholEffect.turns
+    const onDamage = undefined
+    const onEnd = undefined
+    const importance = 0
+    const alcohol = undefined
+    const doNotRemoveUnnaturally = false
+
+    this.AlcoholEffect = new Effect(effectMsg, effectTurns, onDamage, function onShoot(player, result, playerDamaged) {
+      let newShootResult = new gameAlcohol[getRndInt(0, gameAlcohol.length)]()
+      let msg = "Forced Alcohol"
+
+      if (player.name === playerDamaged.name) {
+        newShootResult = true
+        msg = "Forced Live"
+      }
+
+      return [newShootResult, msg]
+    }, onEnd, importance, alcohol, doNotRemoveUnnaturally)
+  }
+
+  oname = "SuperBrandy"
+}
+
+class SuperRedWine extends Red_Wine {
+  constructor() {
+    super()
+    this.name = "Super Red Wine"
+    this.description = `Invincible For 2-3 Turns`
+    this.shortDescription = this.description
+    this.AlcoholEffect.turns = getRndInt(2, 4)
+    this.img = "superredwine.png"
+  }
+
+  oname = "SuperRedWine"
+}
+
+class SuperGin extends Gin {
+  constructor() {
+    super()
+    this.name = "Super Gin"
+    this.description = "Places A Shield Around You; Bullets Have A Chance To Bounce Off You And Hit The Attacker; Lasts 5 Turns"
+    this.AlcoholEffect.turns = 5
+    this.img = "supergin.png"
+  }
+
+  oname = "SuperGin"
+}
+
+let SuperAlcohols = [SuperBeer]
+let AllSuperAlcohols = [SuperBeer, SuperGin, SuperBrandy, SuperRedWine]
