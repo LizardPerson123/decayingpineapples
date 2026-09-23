@@ -17,7 +17,7 @@ function newSession(username, password) {
       onUserLeft = async function(eventData) {
         let members = await getMembersApi()
         if (members.length < 2 && inGameBegin) {
-          alert("Not Enough Players Anymore, " + eventData.username + " Left")
+          await specialAlert("Not Enough Players Anymore, " + eventData.username + " Left")
           reload()
         }
 
@@ -51,7 +51,7 @@ function newSession(username, password) {
 
         if (usercount > 4) {
           endJoiningApi()
-          alert("Maximum Users Reached")
+          await specialAlert("Maximum Users Reached")
         }
 
         let members = await getMembersApi()
@@ -180,7 +180,7 @@ async function beginGameHost(turns) {
   
   //To Prevent Bugs, This Has To Show After The Broadcast Message To Restart Is Shown
   if (turns) {
-    alert("You Survived " + turns + " Turns")
+    await specialAlert("You Survived " + turns + " Turns")
   }
 
   await firstAlcoholHost()
