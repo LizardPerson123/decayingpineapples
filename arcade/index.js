@@ -52,10 +52,10 @@ addEventListener("pageshow", function() {
     const origin = urlParams.get('origin')
 
     if (origin == "rotpear") {
-      getById("back").onclick = () => {window.location.href = '../../cardgame.html'}
+      getById("back").onclick = () => {window.location.href = '../../ac'}
     }
     else if (origin == "about") {
-      getById("back").onclick = () => {window.location.href = '../../about-cardgame.html'}
+      getById("back").onclick = () => {window.location.href = '../../about/arcade'}
     }
   }
   catch(err) {}
