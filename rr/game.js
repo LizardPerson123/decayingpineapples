@@ -79,7 +79,7 @@ async function startGameSingleplayer() {
 }
 
 async function startGameLocalMultiplayer(localMultiplayerPlayers) {
-  peopleNum = (localMultiplayerPlayers || numberOfPeoplePlaying())
+  peopleNum = (localMultiplayerPlayers || await numberOfPeoplePlaying())
 
   for (let i = 1; i <= peopleNum; i++) {
     players.push(new Human(`Person ${i}`))
@@ -144,7 +144,7 @@ async function rottingRoulette() {
   }
 }
 
-function checkIfGameOverLocalMultiplayer() {
+async function checkIfGameOverLocalMultiplayer() {
   const deadPlayers = players.filter(function(player){
     return (player.hp < 1)
   }).length
@@ -156,7 +156,7 @@ function checkIfGameOverLocalMultiplayer() {
   if (!winner) return
     
   if (!autoplay) {
-    alert(winner.name + " Wins")
+    await specialAlert(winner.name + " Wins")
   }
 
   reload()
@@ -243,7 +243,7 @@ async function end(won) {
   }
 
   if (!autoplay) {
-    alert(wonMsg)
+    await specialAlert(wonMsg)
   }
 
   if (!won) {
@@ -353,18 +353,18 @@ function addAlcoholMultiplayer() {
 }
 
 //recursive
-function numberOfPeoplePlaying() {
+async function numberOfPeoplePlaying() {
   let num = prompt("How Many People Are Playing?")
   num = Number(num)
 
   if (!num) {
-    alert("Not A Number")
+    await specialAlert("Not A Number")
   }
   else if (num < 2) {
-    alert("Must Be At Least 2 People")
+    await specialAlert("Must Be At Least 2 People")
   }
   else if (num > 5) {
-    alert("Cannot Be More Than 5 People")
+    await specialAlert("Cannot Be More Than 5 People")
   }
   else {
     return num
@@ -463,7 +463,7 @@ async function firstAlcoholLocalMultiplayer() {
   let chooseAlcohol = getById("chooseAlcohol")
   
   for (let i = 0; i < peopleNum; i++) {
-    alert(`Player ${i+1}, Choose Alcohol`)
+    await specialAlert(`Player ${i+1}, Choose Alcohol`)
     let [alcohol, num] = await firstAlcohol()
     status.innerHTML = "<h1>Alcohol</h1>"
 

@@ -26,6 +26,10 @@ function letThereBeDark() {
     #alcop, #multiplayerButton4 {
       color: #00ff00
     }
+
+    #alert {
+      background-color: ${colors.black} !important
+    }
   `
 
   localStorage.setItem("mode", "dark")

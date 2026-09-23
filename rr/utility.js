@@ -60,3 +60,22 @@ function playSound(url) {
     Audio.remove()
   }
 }
+
+function specialAlert(msg, buttonMsg = "Ok") {
+  const oldScroll = [window.scrollX, window.scrollY]
+
+  getById("alert").style.display = "flex"
+  document.body.style.overflow = "hidden"
+  window.scrollTo(0, 0)
+  getById("alertMsg").innerHTML = msg
+  getById("acceptButton").innerHTML = buttonMsg
+
+  return new Promise(function(resolve, reject) {
+    getById("acceptButton").onclick = function() {
+      window.scrollTo(oldScroll[0], oldScroll[1])
+      document.body.style.overflow = ""
+      getById("alert").style.display = "none"
+      resolve()
+    }
+  })
+}
