@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blackjack</title>
+  <link rel="stylesheet" href="blackjack.css">
+  <link rel="stylesheet" href="../general.css">
+  <style id="styleTag"></style>
+  <link rel="icon" type="image/icon-x" href="favicon.ico">
+
+  <style>
+    p {font-size: 2em; margin-bottom: 20px; margin-top: 20px;}
+    ul {font-size: 1.7em;}
+  </style>
+</head>
+<body>
+  <img id="imgMode" src="sun.svg" style="position: absolute; right: 10px; top: 0px; width: 100px;" onclick="changeMode();">
+  <img src="favicon.ico" style="width: 7em; image-rendering: pixelated;">
+  <h1 style="font-size: 5em; margin-top: 0em; margin-bottom: 0em;">Blackjack</h1>
+  <button id="back" onclick="window.location.href = 'index.html'" class="optionButton">Go Back</button>
+  <p>Blackjack Is An Old Card Game</p>
+  <p>In Blackjack, You Are Competing With A Dealer</p>
+  <p>Both You And The Dealer Will Be Given 2 Cards</p>
+  <p>You Will Be Able To See Both Your Cards, But Only The Dealer's First Card</p>
+  <p>Each Card Corresponds To It's Number, With The Following Exceptions</p>
+  
+  <ul style="display: flex; flex-direction: column; align-items: center;">
+    <li>Aces Can Be Either 1 OR 11 (Which Ever One Gets You The Highest Number)</li>
+    <li>Kings, Queens, And Jacks All Equal 10</li>
+  </ul>
+
+  <p>To Win, You Need To Have A Higher Number Than The Dealer, Without Going Over 21</p>
+  <p>If You Go Over 21, You Bust (Lose Instantly)</p>
+  <p>In Order To Increase Your Number, You Need To "Hit", Which Will Add A Card</p>
+  <p>Once You're Satisfied With Your Number, You Can Stay (Which Ends Your Turn)</p>
+  <p>The Dealer Will Then Reveal Their Second Card</p>
+  <p>If The Dealer's Number Is Lower Than 16, Then They Will Draw Another Card</p>
+  <p>If You're Number Is Higher Than The Dealer, Then You Win</p>
+  <p style="margin-bottom: 40px;">If It's Lower, You Lose</p>
+
+  <h1>Tokens</h1>
+
+  <p>When You First Play Blackjack, You Start With 5 Tokens</p>
+  <p>Before You Begin A Round, You Will Gamble Some Of Those Tokens</p>
+  <p>If You Win, You Win That Amount Of Tokens</p>
+  <p>But If You Lose, You Lose Those Tokens</p>
+  
+  <script src="../utility.js"></script>
+  <script src="../index.js"></script>
+
+</body>
+</html>

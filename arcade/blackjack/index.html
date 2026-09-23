@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blackjack</title>
+  <link rel="stylesheet" href="blackjack.css">
+  <link rel="stylesheet" href="../general.css">
+  <style id="styleTag"></style>
+  <script src="../utility.js"></script>
+  <script src="../index.js"></script>
+  <link rel="icon" type="image/icon-x" href="favicon.ico">
+
+  <script>
+    console.log("Version 2.00")
+    
+    let playerNumber = 0
+    let dealerNumber = 0
+    let dealerCardList = []
+    let playerCardList = []
+    let aceList = []
+    let betAmount
+    let playerDiv = "playerCards"
+    let currentSwitch = "player"
+
+    function increaseNumber(id, bljNumber) {
+      let card = generateCard()
+      showCard(id, card)
+
+      let cardNum = card[1]
+      if (cardNum > 10) {
+        cardNum = 10
+      }
+
+      if (id == "dealerCards") {
+        dealerCardList.push(card)
+        dealerNumber += cardNum
+      }
+      else {
+        playerCardList.push(card)
+        playerNumber += cardNum
+        getById("playerNum").innerText = "Player Number: " + playerNumber
+      }
+
+      if (playerNumber > 21) {
+        alert("You Busted! You Exceeded 21")
+
+        localStorage.setItem("bljScore", Number(localStorage.getItem("bljScore")) - betAmount)
+
+        if (localStorage.getItem("bljScore") < 1) {
+          achi.laterRegi("Lose It All", "bronze")
+          localStorage.setItem("bljScore", 5)
+        }
+
+        manageEnd(false)
+        id = "dontend"
+      }
+
+      if (id == "dontend") {}
+      else if (id == "dealerCards") {
+        return dealerNumber
+      }
+      else {
+        return playerNumber
+      }
+    }
+
+    function increasePlayerNumber() {
+      playerNumber = increaseNumber("playerCards", playerNumber)
+      return playerNumber
+    }
+
+
+    function increaseDealerNumber() {
+      dealerNumber = increaseNumber("dealerCards", dealerNumber)
+      return dealerNumber
+    }
+
+    function showCard(id, card) {
+      if (card[1] == 1 && id == playerDiv) {
+        aceList.push(false)
+      }
+      
+      getById(id).innerHTML += `<img width="100%" src='../cards/${card[0]}-${card[1]}.svg' >`
+    }
+
+    function startGame() {
+      achi.register("Play Blackjack")
+      getById("imgMode").style.display = "none"
+      getById("stayButton").style.display = "inline"
+      getById("hitButton").style.display = "inline"
+      getById("outerCards").style.display = "flex"
+      getById("outer").style.display = "grid"
+      getById("options").style.display = "none"
+      getById("playerNum").style.display = "block"
+      getById("dealerNum").style.display = "block"
+      getById("money").style.display = "none"
+
+      betAmount = handleBettingSingle()
+
+      let hitButton = getById("hitButton")
+
+      playerNumber = increasePlayerNumber()
+      playerNumber = increasePlayerNumber()
+
+      dealerNumber = increaseDealerNumber()
+
+      hitButton.innerText = "Hit"
+      hitButton.onclick = increasePlayerNumber
+
+      getById("dealerNum").innerText = "Dealer Number: " + dealerNumber
+      getById("playerNum").innerText = "Player Number: " + playerNumber
+    }
+
+    function stay() {
+      increaseDealerNumber()
+
+      if (dealerNumber < 16) {
+        increaseDealerNumber()
+      }
+
+      dealerCardList.forEach(function(item) {
+        if (dealerNumber + 10 <= 21 && item[1] == 1) {
+          dealerNumber += 10
+        }
+      })
+
+      playerCardList.forEach(function(item) {
+        if (playerNumber + 10 <= 21 && item[1] == 1) {
+          playerNumber += 10
+        }
+      })
+
+      let won = false
+
+      if (playerNumber > dealerNumber || dealerNumber > 21) {
+        alert("You win! Dealer had " + dealerNumber)
+        won = true
+        if (betAmount >= 10 && localStorage.getItem("bljScore") == betAmount) {achi.laterRegi("Bet It All And Win (10+)", "silver")}
+        if (betAmount >= 30 && localStorage.getItem("bljScore") == betAmount) {achi.laterRegi("Bet It All And Win (30+)", "gold")}
+        localStorage.setItem("bljScore", Number(localStorage.getItem("bljScore")) + betAmount)
+        achi.laterRegi("Win Blackjack", "bronze")
+        if (playerNumber == 21) {achi.laterRegi("21", "silver")}
+      } else {
+        alert("You lose! Dealer had " + dealerNumber)
+
+        localStorage.setItem("bljScore", Number(localStorage.getItem("bljScore")) - betAmount)
+
+        if (localStorage.getItem("bljScore") < 1) {
+          achi.laterRegi("Lose It All", "bronze")
+          localStorage.setItem("bljScore", 5)
+        }
+      }
+
+      manageEnd(won)
+    }
+
+    async function manageEnd(won) {
+      let t = 0
+      if (won) {
+        t = 1
+      }
+
+      if (localStorage.getItem("username")) {
+        document.querySelector("body").innerText = "Please Wait..."
+              
+        try {
+          //To Prevent Accounts From Being Banned
+          let action_p = await fetch("https://api.rottingpears.com/action_p?n=" + encodeURI(localStorage.getItem("username")))
+          action_p = await action_p.text()
+          if (action_p >= 10) {throw "err"}
+
+          await fetch("https://api.rottingpears.com/xp", {
+            method: "POST",
+            body: JSON.stringify({
+              n: localStorage.getItem("username"),
+              p: localStorage.getItem("password"),
+              t: t
+            }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            }
+          })
+        }
+        catch (e) {}
+      }
+
+      window.location.reload()
+    }
+
+    function handleBettingSingle() {
+      if (!localStorage.getItem("bljScore")) {localStorage.setItem("bljScore", 5)}
+      let bljScore = localStorage.getItem("bljScore")
+
+      return handleBetting(bljScore)
+    }
+
+    function handleBettingMulti(bljScore) {
+      return handleBetting(bljScore)
+    }
+
+    function handleBetting(bljScore) {
+      let betAmount
+      do {
+        betAmount = prompt(`How Much Would You Like To Bet? You Have ${bljScore}`)
+        betAmount = Number(betAmount)
+
+        if (!betAmount) {
+          alert("Your Bet Must Be A Number")
+
+          //Make Sure The Check Fails So That It Tries Again
+          betAmount = bljScore + 1
+          continue
+        }
+
+        if (betAmount > bljScore) {
+          alert(`You Can't Bet That Much, You Don't Have ${betAmount}`)
+        }
+      }
+      while (betAmount > bljScore)
+      return betAmount
+    }
+
+    function switchFunc() {
+      if (currentSwitch == "player") {
+        getById("outer" + currentlyShowing).style.display = "none"
+        getById("outerDealer").style.display = "block"
+        getById("switchDealerPlayer").innerText = "Switch to Player"
+        currentSwitch = "dealer"
+      }
+      else {
+        getById("outer" + currentlyShowing).style.display = "block"
+        getById("outerDealer").style.display = "none"
+        getById("switchDealerPlayer").innerText = "Switch to Dealer"
+        currentSwitch = "player"
+      }
+    }
+
+    addEventListener("DOMContentLoaded", function() {
+      getById("money").innerText = "Your Money: " + (localStorage.getItem("bljScore") || 5)
+
+      if (localStorage.getItem("bljScore") >= 10) {
+        achi.register("A Good Bit Of Money", "bronze")
+      }
+      if (localStorage.getItem("bljScore") >= 20) {
+        achi.register("A Great Bit Of Money", "silver")
+      }
+      if (localStorage.getItem("bljScore") >= 30) {
+        achi.register("An Excellent Bit Of Money", "gold")
+      }
+    })
+
+  </script>
+</head>
+<body>
+  <div id="chat" style="display: none;">
+   <h1 style="font-size: 3em; margin-top: 20px;">Chat</h1>
+   <button onclick="RottingExtension.setCurrentView('main')" class="optionButton" style="margin-bottom: 20px;">Go Back</button>
+   <div id="chatShow"></div>
+
+   <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 30px;">
+     <input style="border: solid; width: 80%; font-size: 2em; border-radius: 1em;" id="textMsgInput">
+   </div>
+
+   <button onclick="chat.register(player, getById('textMsgInput').value); broadcast(JSON.stringify({msg: 'message', chat: getById('textMsgInput').value})); getById('textMsgInput').value = ''" class="optionButton">Send Message</button>
+
+   <script>
+    function keyPressSendMessage() {
+     document.addEventListener('keydown', onKeyHandler)
+     function onKeyHandler(e) {
+       if (e.keyCode === 13) {
+        chat.register(player, getById('textMsgInput').value)
+        broadcast(JSON.stringify({msg: 'message', chat: getById('textMsgInput').value}))
+        getById("textMsgInput").value = ""
+       }
+     }
+    }
+
+    keyPressSendMessage()
+   </script>
+  </div>
+  <div id="achiLists" style="position: absolute; top: 20px; right: 0px; display: flex; flex-direction: column; gap: 20px">
+  
+  </div>
+  <div id="main">
+  <img id="imgMode" src="../sun.svg" style="position: absolute; right: 10px; top: 0px; width: 100px;" onclick="changeMode();">
+  <img src="favicon.ico" style="width: 7em; image-rendering: pixelated;">
+  <h1 id="iHaveACrushOn" style="margin-top: 0em; margin-bottom: 0em;">Blackjack</h1>
+  <p id="money" style="font-size: 2em; margin-top: 0em; margin-bottom: 10px;">Your Money: 8</p>
+  <p id="playerNum" style="font-size: 2em; margin-top: 0em; color: green; display: none; margin-bottom: 10px;">Player Number: 8</p>
+  <p id="dealerNum" style="font-size: 2em; margin-top: 0em; margin-bottom: 10px; color: red; display: none;">Dealer Number: 8</p>
+  <h1 style="display: none;" id="currentlyPlaying"></h1>
+  <h1 style="display: none;" id="dealerNum"></h1>
+
+  <div style="object-fit: cover; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;" id="options">
+    <div style="position: relative; text-align: center;">
+      <img style="image-rendering: pixelated;" onclick="startGame()" class="gameOptionCards" src="../playingcardback.png">
+      <h3 style="font-size: 2.5em; color: black; " class="centerText">Singleplayer</h3>
+    </div>
+
+    <div style="position: relative; text-align: center;">
+      <img style="image-rendering: pixelated;" onclick="multiplayerStart()" class="gameOptionCards" src="../playingcardback.png">
+      <h3 style="font-size: 2.5em; color: black;" class="centerText">Multiplayer</h3>
+    </div>
+
+    <div style="position: relative; text-align: center;">
+      <img style="image-rendering: pixelated;" onclick="window.location.href = 'howtoplay.html'" class="gameOptionCards" src="../playingcardback.png">
+      <h3 style="font-size: 2.5em; color: black; " class="centerText">How To Play</h3>
+    </div>
+  </div>
+  
+  <button class="optionButton" id="hitButton" onclick="startGame()">Hit</button>
+  <button class="optionButton" id="stayButton" onclick="stay()">Stay</button>
+  <button id="chatButton" style="display: none;" class="optionButton" onclick="chat.show()">Chat</button>
+  
+  <div id="outer" style="display: none; grid-template-columns: auto auto auto; grid-template-rows: auto auto auto; justify-content: center; align-items: center; margin-top: 2em; position: relative;">
+  
+  <div id="outerCards" style="grid-area: 2 / 2 / span 1 / span 1; display: inline-flex; justify-content: center; align-items: center; background:none; background-image: url('table.png'); image-rendering: pixelated; box-shadow: none; border-radius: 30px; gap: 20px; background-size: 100% 100%; position: relative;" class="outerBoxDiv">
+    <button id="switchDealerPlayer" onclick="switchFunc()" style="position: absolute; top: 10px; left: 10px; border: none; font-size: 1.5em; padding: 3px;">Switch to Dealer</button>
+    <div style="display: flex; flex-direction: column; justify-content: center; width: 90%; height: inherit;" id="outerPlayer">
+      <div id="playerCards" class="cardDeck" style="display: flex; align-items: center; height: inherit;">
+      </div>
+    </div>
+    
+    <div style="display: none; flex-direction: column; justify-content: center; width: 90%;" id="outerDealer">
+      <div id="dealerCards" class="cardDeck" style="display: flex; align-items: center;">
+      </div>
+    </div>
+
+  </div>
+
+  <div id="dealerSwitch" class="switchButtons" onclick='getById("outer" + currentlyShowing).style.display = "none"; currentlyShowing = "Dealer"; getById("outer" + currentlyShowing).style.display = "block"' style="grid-area: 1 / 2 / span 1 / span 1;">
+    <img style="width: 40px;" src="head_gold.png"/>
+    <p style="font-size: 20px;" id="switchDealerText">Dealer</p>
+  </div>
+  </div>
+
+  <div style="display: none;" id="multiplayerNewMenu">
+    <h2 id="status"></h2>
+    <button id="startMultiplayerGame" style="margin-bottom: 20px; display: none;" class="optionButton" onclick="beginGame()">Start Game</button>
+    <div class="outerBoxDiv" style=" padding-top: 0.5em; padding-bottom: 1em;" id="usernames">
+      <h2 style="font-size: 1.7em;">Players</h2>
+    </div>
+  </div>
+
+  <div style="display: none;" id="multiplayerJoin">
+    <h1>Waiting To Start...</h1>
+    <h1 id="host"></h1>
+    <div class="outerBoxDiv" style="padding-top: 0.5em; padding-bottom: 1em;" id="usernames2">
+      <h2 style="font-size: 1.7em;">Players</h2>
+    </div>
+  </div>
+
+  <div style="display: none;" id="multiplayerMenu">
+      <h2 style="margin-bottom: 0.7em; margin-top: 5px;" id="whatDoing">Creating New Session</h2>
+      <div style="margin-bottom: 2em;">
+        <input type="button" id="new" name="joinOrNew" value="New Session" class="optionButton" style="display: none;">
+        <input type="button" id="join" name="joinOrNew" value="Join Session" class="optionButton"><br>
+      </div>
+      <label for="username" style="font-size: 1.5em; margin-bottom: 10px;">Username:</label><br>
+      <input type="text" id="username" name="username" style="width: 60%; margin-bottom: 2em; border-radius: 1.5em; font-size: 1.5em; padding-top: 10px; padding-bottom: 10px; border: solid;"><br>
+      <label for="password" style="font-size: 1.5em; margin-bottom: 10px;">Password:</label><br>
+      <input type="text" id="password" name="password" style="width: 60%; margin-bottom: 2em; border-radius: 1.5em; font-size: 1.5em; padding-top: 10px; padding-bottom: 10px; border: solid;"><br>
+
+      <label for="sessionCode" style="font-size: 1.5em; display: none; margin-bottom: 10px;" id="sessionCodeText">Session Code:</label><br>
+      <input type="text" id="sessionCode" name="sessionCode" style="width: 60%; margin-bottom: 2em; border-radius: 1.5em; font-size: 1.5em; display: none; padding-top: 10px; padding-bottom: 10px; border: solid;" onkeypress="return isNumberKey(event)"><br>
+      <button class="optionButton" id="startMultiplayer">Start</button>
+  </div>
+
+  <div style="display: none;" id="didBeat">
+    <div id="userList">
+
+    </div>
+    
+    <div id="continueButtons">
+      <h1>Continue?</h1>
+      <button class="optionButton" style="background-color: rgb(3, 212, 55) !important;" onclick="resolveShouldContinue(true)">Yes</button>
+      <button class="optionButton" style="background-color: rgb(212, 3, 3) !important;" onclick="resolveShouldContinue(false)">No</button>
+    </div>
+  </div>
+  </div>
+
+  <script src="../pearnet.js"></script>
+  <script src="clientlib.js"></script>
+  <script src="multiplayer.js"></script>
+  <script src="../generatecard.js"></script>
+  <script src="../rotextensions.js"></script>
+
+  <script>
+    let members
+
+    async function multiplayerStart() {
+      ws = new WebSocket("wss://api.rottingpears.com/")
+      let currentMode
+
+      ws.onmessage = function (msg) {
+        getById("money").style.display = "none"
+        getById("imgMode").style.display = "none"
+        getById("options").style.display = "none"
+        getById("multiplayerMenu").style.display = "block"
+
+        getById("username").value = localStorage.getItem("username") || ""
+        getById("password").value = localStorage.getItem("password") || ""
+        getById("sessionCode").value = ""
+
+        getById("new").addEventListener("click", function a() {
+          currentMode = "new"
+          getById("sessionCode").style.display = "none"
+          getById("sessionCodeText").style.display = "none"
+          getById("whatDoing").innerText = "Creating New Session"
+
+          getById("new").style.display = "none"
+          getById("join").style.display = "inline"
+        })
+
+        getById("join").addEventListener("click", function b() {
+          currentMode = "join"
+          getById("sessionCode").style.display = "inline"
+          getById("sessionCodeText").style.display = "inline"
+          getById("whatDoing").innerText = "Joining Session"
+
+          getById("join").style.display = "none"
+          getById("new").style.display = "inline"
+        })
+
+        getById("startMultiplayer").addEventListener("click", function b() {
+          let username = getById("username").value
+          let password = getById("password").value
+          let sessionCode = getById("sessionCode").value
+
+          if (username.length < 1 || password.length < 1) {
+            alert("Username And Password Must Not Be Blank")
+          }
+          else if (currentMode == "join") {
+            if (sessionCode.length < 5) {
+              alert("Session Code Must Be 5 Characters Long")
+            }
+            else {
+              joinSession(username, password, sessionCode)
+            }
+          }
+          else {
+            newSession(username, password)
+          }
+
+          localStorage.setItem("username", username)
+          localStorage.setItem("password", password)
+        })
+      }
+      
+      ws.onclose = function() {alert("Connection Has Been Disrupted"); window.location.reload()}
+    }
+  </script>
+</body>
+</html>
