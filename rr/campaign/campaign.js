@@ -166,6 +166,7 @@ function saveDataImport() {
 function addUnload(event) {
   if (players[0].skips < 1) {
     event.preventDefault()
+    event.returnValue = ''
     saveDataDelete()
     return
   }
@@ -345,16 +346,16 @@ async function nextRoundOrExit() {
   return "leave"
 }
 
-function skipRound() {
+async function skipRound() {
   if (players[0].skips < 1) {
-    alert("You Have No Skips")
+    await specialAlert("You Have No Skips")
     return
   }
 
   if (!confirm("Are You Sure You Want To Use Your Skip? You Have " + players[0].skips + " Skip(s) Left")) {
     return
   }
-
+  
   players[0].skips--
   saveDataExport()
   window.removeEventListener("beforeunload", addUnload)
