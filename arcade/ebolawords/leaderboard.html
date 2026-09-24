@@ -11,6 +11,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+
+  <script>
+    function handleChange() {
+      setUpLeaderboard(getById("leaderboardOption").value)
+    }
+  </script>
+
+  <style>
+    select, 
+    select option {
+      font-family: inherit !important;
+      font-size: 1.3em;
+      display: block;
+      background-color: none;
+      border: solid;
+    }
+  </style>
 </head>
 <body>
   <div id="dropdiv" style="position: absolute; top: 10px; left: 10px;">
@@ -30,9 +47,11 @@
   <div style="display: flex; flex-direction: column; align-items: center;" id="leaderboardOuter">
     <h1 style="font-size: 3em;">Leaderboard</h1>
     <div style="margin-bottom: 20px;">
-      <button class="option altChange" style="margin-right: 1em; padding: 10px; padding-left: 30px; padding-right: 30px; margin-bottom: 10px;" onclick="setUpLeaderboard('normal')">Classic</button>
-      <button class="option altChange" style="margin-right: 1em; padding: 10px; padding-left: 30px; padding-right: 30px; margin-bottom: 10px;" onclick="setUpLeaderboard('triple_ebola')">Triple Ebola</button>
-      <button class="option altChange" style="padding: 10px; padding-left: 30px; padding-right: 30px;" onclick="setUpLeaderboard('time_attack')">Time Attack</button>
+      <select onchange="handleChange()" name="leaderboards" id="leaderboardOption" autocomplete="off">
+       <option value="normal" selected>Classic</option>
+       <option value="triple_ebola">Triples</option>
+       <option value="time_attack">Time Attack</option>
+      </select>
     </div>
     <div>
       <button class="option altChange" style="margin-right: 1em; padding: 10px; padding-left: 30px; padding-right: 30px;" onclick="loadMoreLeaderboard(1)">More</button>
