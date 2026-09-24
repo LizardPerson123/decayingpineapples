@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Game</title>
+  <link rel="stylesheet" href="general.css">
+  <style id="styleTag"></style>
+  <link rel="icon" type="image/icon-x" href="../favicon.ico">
+</head>
+<body>
+  <h1>Card Games (More Coming Soon)</h1>
+  <div class="gameButton">
+    <button style="background-color: #fcba03;" onclick='redirect("blackjack")'>Black Jack</button>
+  </div>
+
+  <div class="gameButton">
+    <button style="background-color: #0553fa;" onclick='redirect("war")'>War</button>
+  </div>
+
+  <div class="gameButton">
+    <button style="background-color: #03d7fc;" onclick='redirect("slapjack")'>Slapjack</button>
+  </div>
+
+  <script src="utility.js"></script>
+  <script>
+    function redirect(game) {
+      window.location.href=`${game}/index.html`
+    }
+
+    function letThereBeLight() {
+      getById("styleTag").innerHTML = ""
+      localStorage.setItem("mode", "light")
+    }
+
+    function letThereBeDark() {
+      getById("styleTag").innerHTML = `
+        body {background-color: black; color: white}
+
+        button {color: black}
+      `
+      localStorage.setItem("mode", "dark")
+    }
+
+    function applyMode() {
+      let mode = localStorage.getItem("mode")
+      if (mode == "dark") {
+        letThereBeDark()
+      }
+      else {
+        letThereBeLight()
+      }
+    }
+
+    addEventListener("pageshow", function() {
+      applyMode()
+    })
+  </script>
+</body>
+</html>

@@ -10,8 +10,13 @@ let Clubs = Array.from(Array(13).keys()).map(x => x + 1)
 
 let cards = [Spades, Hearts, Diamonds, Clubs]
 
-function generateCard() {
+function generateCard(makeMoreCards) {
   if (cards.every(suit => suit.length === 0)) {
+    if (makeMoreCards) {
+      resetCards()
+      return generateCard()
+    }
+
     return null
   }
 
