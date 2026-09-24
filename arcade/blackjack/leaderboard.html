@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard</title>
+  <style id="dropdivStyle"></style>
+  <link rel="stylesheet" href="blackjack.css">
+  <link rel="icon" type="image/icon-x" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+
+  <style>
+    select, 
+    select option {
+      font-family: inherit !important;
+      font-size: 1.3em;
+      display: block;
+      background-color: none;
+      border: solid;
+    }
+  </style>
+</head>
+<body>
+  <div id="achiLists" style="position: absolute; top: 20px; right: 0px; display: flex; flex-direction: column; gap: 20px">
+  
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center;" id="leaderboardOuter">
+    <img src="favicon.ico" style="width: 7em; image-rendering: pixelated;">
+    <h1 style="font-size: 3em;">Leaderboard</h1>
+    <div>
+      <button class="optionButton" style="margin-right: 1em; padding: 10px; padding-left: 30px; padding-right: 30px;" onclick="loadMoreLeaderboard(1)">More</button>
+      <button class="optionButton" style="padding: 10px; padding-left: 30px; padding-right: 30px;" onclick="loadMoreLeaderboard(-1)">Back</button>
+    </div>
+    <div id="leaderboard">
+
+    </div>
+  </div>
+
+  <script src="../index.js"></script>
+  <script src="httphandler.js"></script>
+  <script src="../utility.js"></script>
+  <script src="leaderboard.js"></script>
+  <script src="../rotextensions.js"></script>
+</body>
+</html>

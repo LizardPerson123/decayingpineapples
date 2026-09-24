@@ -1,0 +1,3 @@
+async function getLeaderboard(v) {return fetch(`https://api.rottingpears.com/bl/leaderboard/?v=${v}`).then(res => res.json())}
+async function submitScore(username, password, score) {return fetch('https://api.rottingpears.com/bl/submitScore', {method:'POST', body: JSON.stringify({username: username, password: password, score: score}), headers: {"Content-Type": "application/json"}})}
+async function isScore(v, username) {return fetch(`https://api.rottingpears.com/bl/isScore?v=${v}&username=${encodeURI(username)}`).then(res => res.text())}
