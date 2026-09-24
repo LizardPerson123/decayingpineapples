@@ -289,7 +289,7 @@ async function showWinScreen(player) {
   }
 
   if (choice[0] === extraAlcohol) {
-    player.activeAlcohol.push(new AllSuperAlcohols[getRndInt(0, AlcoholTypes.length)]())
+    player.activeAlcohol.push(new AllSuperAlcohols[getRndInt(0, AllSuperAlcohols.length)]())
   }
 
   if (choice[0] === extraSkip) {
