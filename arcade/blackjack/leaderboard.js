@@ -35,7 +35,3 @@ async function loadMoreLeaderboard(addToLeaderboardPage = 1) {
 addEventListener("pageshow", function() {
   ApplyMode()
 })
-
-addEventListener("DOMContentLoaded", function() {
-  achi.register("Visit The Leaderboard", "bronze")
-})

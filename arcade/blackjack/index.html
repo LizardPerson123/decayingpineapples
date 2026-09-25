@@ -48,7 +48,6 @@
         localStorage.setItem("bljScore", Number(localStorage.getItem("bljScore")) - betAmount)
 
         if (localStorage.getItem("bljScore") < 1) {
-          achi.laterRegi("Lose It All", "bronze")
           localStorage.setItem("bljScore", 5)
         }
 
@@ -85,7 +84,6 @@
     }
 
     function startGame() {
-      achi.register("Play Blackjack")
       getById("imgMode").style.display = "none"
       getById("stayButton").style.display = "inline"
       getById("hitButton").style.display = "inline"
@@ -136,18 +134,13 @@
       if (playerNumber > dealerNumber || dealerNumber > 21) {
         alert("You win! Dealer had " + dealerNumber)
         won = true
-        if (betAmount >= 10 && localStorage.getItem("bljScore") == betAmount) {achi.laterRegi("Bet It All And Win (10+)", "silver")}
-        if (betAmount >= 30 && localStorage.getItem("bljScore") == betAmount) {achi.laterRegi("Bet It All And Win (30+)", "gold")}
         localStorage.setItem("bljScore", Number(localStorage.getItem("bljScore")) + betAmount)
-        achi.laterRegi("Win Blackjack", "bronze")
-        if (playerNumber == 21) {achi.laterRegi("21", "silver")}
       } else {
         alert("You lose! Dealer had " + dealerNumber)
 
         localStorage.setItem("bljScore", Number(localStorage.getItem("bljScore")) - betAmount)
 
         if (localStorage.getItem("bljScore") < 1) {
-          achi.laterRegi("Lose It All", "bronze")
           localStorage.setItem("bljScore", 5)
         }
       }

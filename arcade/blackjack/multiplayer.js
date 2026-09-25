@@ -165,8 +165,6 @@ async function beginRound() {
   usersData[host].betAmount = handleBettingMulti(usersData[host].score)
   usersData[host].ready = true
 
-  achi.register("Play Blackjack Multiplayer", "bronze")
-
   await handleBeginning()
 }
 

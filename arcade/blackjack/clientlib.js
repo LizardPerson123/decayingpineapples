@@ -8,7 +8,6 @@ function getBetNum(event) {
   let eventData = JSON.parse(event.data)
 
   if (eventData.from == host) {
-    achi.register("Play Blackjack Multiplayer", "bronze")
     getById("chatButton").style.display = "none"
     getById("outer").style.display = "grid"
     getById("didBeat").style.display = "none"
