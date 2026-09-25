@@ -97,7 +97,7 @@ function saveDataImport() {
 
   if (!data) {
     const player = new Human("Player")
-    player.hp = 8
+    player.hp = 5
     player.skips = skips || 2
 
     window.addEventListener("beforeunload", addUnload)
@@ -256,11 +256,11 @@ async function showWinScreen(player) {
 
     players.push(new Human())
 
-    player.hp += 2
+    player.hp += 3
     player.skips = 0
 
     await displayMessageAndWaitForConfirmation("Next Round Is A Boss", "Ok")
-    await displayMessageAndWaitForConfirmation("You Have Had 2 Hearts Added", "Ok")
+    await displayMessageAndWaitForConfirmation("You Have Had 3 Hearts Added", "Ok")
 
     const boss = new bosses[getRndInt(0, bosses.length)]()
     
@@ -457,7 +457,8 @@ async function shortcutUI() {
 
 function createCPUSCampaign() {
   const level1CPUS = [0, 1]
-  const level2CPUS = [2, 3, 4]
+  const level2CPUS = [2, 3]
+  const level3CPUS = [4, 5]
 
   let numberOfPlayers
 
@@ -467,8 +468,11 @@ function createCPUSCampaign() {
   else if (level2CPUS.includes(currentSection)) {
     numberOfPlayers = 2
   }
-  else {
+  else if (level3CPUS.includes(currentSection)) {
     numberOfPlayers = 3
+  }
+  else {
+    numberOfPlayers = 4
   }
 
   for (let i = 1; i <= numberOfPlayers; i++) {

@@ -566,10 +566,10 @@ class BotWithCoolName extends Bot {
 class Wizard extends Bot {
   altOutcomeDecision() {
     let msg = ""
-    const action = getRndInt(0, 4)
+    let action = getRndInt(0, 4)
 
     if (action === 3 && getRndInt(0, 2) === 0) {
-      action = 0
+      action = 2
     }
   
     if (action === 0) {
