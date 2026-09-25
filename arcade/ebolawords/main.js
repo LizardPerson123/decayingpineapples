@@ -1,12 +1,9 @@
 async function start(difficulty) {
-  achi.register("Play Ebola Words", "bronze")
-
   let gameModesPlayed = localStorage.getItem("gameModes") || []
   if (gameModesPlayed == "") {gameModesPlayed = []}
   else {gameModesPlayed = JSON.parse(gameModesPlayed)}
 
   if (!(gameModesPlayed.includes(gamemode))) {gameModesPlayed.push(gamemode)}
-  if (gameModesPlayed.length == 3) {achi.register("Health Care", "bronze")}
   localStorage.setItem("gameModes", JSON.stringify(gameModesPlayed))
 
   getById("score").style.display = "block"

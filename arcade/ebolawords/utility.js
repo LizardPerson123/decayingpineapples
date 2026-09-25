@@ -43,18 +43,6 @@ async function manageGameFinished(score) {
     let highscore = localStorage.getItem("highscore" + gamemode) || 0
     let newHighScore = score > highscore
 
-    if (score >= 1000) {
-      let gameModesWith1000 = localStorage.getItem("gameModes1000") || []
-      if (gameModesWith1000 == "") {gameModesWith1000 = []}
-      else {gameModesWith1000 = JSON.parse(gameModesWith1000)}
-
-      if (!(gameModesWith1000.includes(gamemode))) {gameModesWith1000.push(gamemode)}
-
-      if (gameModesWith1000.length == 3) {achi.laterRegi("I Give Up", "gold")}
-
-      localStorage.setItem("gameModes1000", JSON.stringify(gameModesWith1000))
-    }
-
     if (!newHighScore) {
       await manageEnd(score)
     }
@@ -64,8 +52,6 @@ async function manageGameFinished(score) {
       if (score >= 100 && gamemode == "") {achi.laterRegi("Ebola Novice", "bronze")}
       if (score >= 500 && gamemode == "") {achi.laterRegi("Ebola Medior", "silver")}
       if (score >= 1000 && gamemode == "") {achi.laterRegi("Ebola Expert", "gold")}
-
-      if (localStorage.getItem("highscore")) {achi.laterRegi("Even Higher", "bronze")}
 
       localStorage.setItem("highscore" + gamemode, score)
 

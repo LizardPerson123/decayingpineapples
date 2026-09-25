@@ -151,8 +151,6 @@ async function addToScore(amount) {
     }
 
     wipeouts++
-
-    if (wipeouts == 5) {achi.register("Wipeout Mania", "silver")}
   }
 }
 
@@ -210,8 +208,6 @@ function cure(id, wipeout) {
 }
 
 function wipeout() {
-  if (ebolaList.length <= 8) {achi.register("Barely Made It", "silver")}
-  
   let tempEbolaList = ebolaList.slice()
 
   tempEbolaList.forEach((id) => {cure(Object.keys(id), true)})
