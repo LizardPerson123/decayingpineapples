@@ -6,6 +6,7 @@ let forkDecision = 0
 let inSubSection = false
 let mapImage
 let bossName
+let hasTakenHelp
 
 function startCampaign() {
   saveDataDelete()
@@ -40,6 +41,10 @@ async function manageEndCampaign(won) {
 
       if (bossName) {
         handleBossAchi(bossName)
+      }
+
+      if (!hasTakenHelp) {
+        achi.laterRegi("No Help Needed", "gold")
       }
     })
     
@@ -109,10 +114,12 @@ function saveDataImport() {
   bossName = data.boss
   const playerSaveData = data.player
   const player = new Human()
+  hasTakenHelp = playerSaveData.campaignHasTakenHelp
   player.name = playerSaveData.name
   player.hp = playerSaveData.hp
   player.skips = playerSaveData.skips
   player.originalName = playerSaveData.originalName
+  player.campaignHasTakenHelp = playerSaveData.campaignHasTakenHelp
 
   playerSaveData.activeAlcohol.forEach(function(alcohol) {
     alcohol = importAlcohol(alcohol)
@@ -138,6 +145,7 @@ function saveDataImport() {
     currentSection = data.currentSection
     subSection = data.subSection
     forkDecision = data.forkDecision
+    saveDataDelete()
     return ["boss", data.boss, player]
   }
 
@@ -256,13 +264,13 @@ async function showWinScreen(player) {
 
     players.push(new Human())
 
-    player.hp += 3
+    const boss = new bosses[getRndInt(0, bosses.length)]()
+
+    player.hp += boss.heartsToAdd
     player.skips = 0
 
     await displayMessageAndWaitForConfirmation("Next Round Is A Boss", "Ok")
-    await displayMessageAndWaitForConfirmation("You Have Had 3 Hearts Added", "Ok")
-
-    const boss = new bosses[getRndInt(0, bosses.length)]()
+    await displayMessageAndWaitForConfirmation(`You Have Had ${boss.heartsToAdd} Hearts Added`, "Ok")
     
     announceBoss = await bossManager(boss)
 
@@ -286,6 +294,7 @@ async function showWinScreen(player) {
 
   if (choice[0] === extraHeart) {
     player.hp++
+    player.campaignHasTakenHelp = true
   }
 
   if (choice[0] === extraAlcohol) {

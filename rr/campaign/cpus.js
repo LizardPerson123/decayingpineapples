@@ -164,10 +164,6 @@ class Innocent extends Bot {
   damage(hp, attacker) {
     const result = super.damage(hp, attacker)
 
-    if (attacker && attacker.name === players[0].name && this.hp < 1) {
-      achi.register("Heartless Monster", "bronze")
-    }
-
     return result
   }
 }
@@ -312,6 +308,7 @@ class SuperDuplex extends Bot {
     this.name = "Super Duplex"
     this.enemyNumber = 0
     this.messages = ["The Super Duplex Splits Into Two Smaller Duplexes"]
+    this.heartsToAdd = 1
   }
 
   damage(hp, attacker) {
@@ -478,7 +475,7 @@ class General extends Bot {
       ["alcohol", "getAlcoholName"],
     ]
 
-    const decision = decisions[getRndInt(0, decisions.length)]
+    let decision = decisions[getRndInt(0, decisions.length)]
 
     if (decision.includes("getAlcoholName")) {
       let alcohol = getRndInt(0, gameAlcohol.length)
@@ -533,6 +530,7 @@ class General extends Bot {
     this.name = "General"
     this.enemyNumber = 3
     this.cpus = [Bot, Tank, BotWithCoolName]
+    this.heartsToAdd = 3
 
     this.messages = ["The General Commands Enemies", 
       "They Will All Perform The Action He Commands Them To",
@@ -675,6 +673,7 @@ class Wizard extends Bot {
     this.description = "Casts Spells"
     this.name = "Wizard"
     this.altOutcome = this.altOutcomeDecision
+    this.heartsToAdd = 2
 
     const shootEffect = function(player, result) {
       let msg = "Wizard Blank"
@@ -723,4 +722,4 @@ class Wizard extends Bot {
 }
 
 const cpus = [Bot, Specialist, Expendable, Duplex, CantDie, CanGoInsane, Innocent, Tank, Sniper]
-const bosses = [Wizard, Judge, General, SuperDuplex]
+const bosses = [Wizard, General, SuperDuplex]
