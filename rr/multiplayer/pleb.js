@@ -75,7 +75,6 @@ function joinSession(username, password, sessionID) {
 }
 
 async function beginGamePleb() {
-  achi.register("Play Rotting Roulette Multiplayer", "bronze")
   inGame = true
 
   keyPressSendMessage()
