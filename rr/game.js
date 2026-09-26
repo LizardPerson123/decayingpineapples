@@ -17,8 +17,6 @@ const gameModes = {
 }
 
 async function startGame(localMultiplayerPlayers) {
-  achi.register("Play Rotting Roulette", "bronze")
-
   turnWheel()
   getTextSpeed()
   getWheelSpeed()
@@ -163,13 +161,15 @@ async function checkIfGameOverLocalMultiplayer() {
 }
 
 
-async function checkForShowdown(params) {
+async function checkForShowdown() {
   let numberOfPeopleWithOneHeart = 0
   players.forEach(function(player) {
     if (player.hp === 1) {numberOfPeopleWithOneHeart++}
   })
 
-  if (numberOfPeopleWithOneHeart === 2 && players.getAlivePlayers().length == 2 && !localMultiplayer) {achi.register("Showdown", "silver")}
+  if (numberOfPeopleWithOneHeart === 2 && players.getAlivePlayers().length == 2 && !localMultiplayer) {
+    achi.register("Showdown", "silver")
+  }
 }
 
 function updatePlayerInLocalMultiplayer(player) {
@@ -238,19 +238,32 @@ async function end(won) {
   if (howMuchAlcoholUsed === "None Used") {
     achi.laterRegi("Sober", "silver")
   }
-  else if (howMuchAlcoholUsed) {
-    achi.laterRegi("Alcoholic", "silver")
-  }
 
   if (!autoplay) {
     await specialAlert(wonMsg)
   }
 
-  if (!won) {
-    achi.laterRegi("Lose Rotting Roulette", "bronze")
+  if (won) {
+    achi.laterRegi("Win Rotting Roulette", "bronze")
+
+    if (difficulty === "hard") {
+      achi.laterRegi("God Among Men", "gold")
+    }
+
+    let timesWon = Number(localStorage.getItem("rrTimesWon") || 0)
+    timesWon++
+    localStorage.setItem("rrTimesWon", timesWon)
+
+    if (timesWon > 2) {
+      achi.laterRegi("Roulette Master", "silver")
+    }
+
+    if (!players[0].hasBeenDamaged) {
+      achi.laterRegi("Unfazed", "gold")
+    }
   }
   else {
-    achi.laterRegi("Win Rotting Roulette", "bronze")
+    localStorage.setItem("rrTimesWon", 0)
   }
 
   if (localStorage.getItem("username")) {
@@ -454,7 +467,7 @@ async function firstAlcoholSingleplayer() {
   alcohol.startEffect(this, this)
   
   for (let i = 1; i < players.length; i++) {
-    players[i].activeAlcohol.push(new gameAlcohol[getRndInt(0, 3)])
+    players[i].activeAlcohol.push(new gameAlcohol[getRndInt(0, gameAlcohol.length)])
   }
 }
 

@@ -32,9 +32,10 @@ class Beer extends Alcohol {
     const onEnd = undefined
     const importance = 0
 
-    this.AlcoholEffect = new Effect(effectMsg, effectTurns, onDamage, function onShoot(player, result) {
+    this.AlcoholEffect = new Effect(effectMsg, effectTurns, onDamage, function onShoot(player, result, playerDamaged) {
       const newShootResult = true
       const msg = "Guranteed Live"
+
       return [newShootResult, msg]
     }, onEnd, importance, undefined)
 
@@ -226,6 +227,7 @@ class White_Wine extends Alcohol {
     super(turns, function(player, turns) {
       turns--
       player.damage(damageAmount)
+      player.campaignHasTakenHelp = true
       const msg = "Healed " + healAmount + " Heart(s)"
       return[turns, msg, undefined]
     })
@@ -286,7 +288,6 @@ class Gin extends Alcohol {
     const turns = 1
     super(turns, function(player, turns) {
       return new Promise(async function(resolve) {
-        if (player instanceof Human) {achi.register("One Of The Alcohols", "bronze")}
         turns--
         const msg = "Attacks Can Now Damage The Attacker"
         resolve([turns, msg, this.AlcoholEffect])
@@ -337,6 +338,7 @@ class MoonShine extends Alcohol {
         }
 
         this.AlcoholEffect.health = heartsToWager
+        this.AlcoholEffect.allHeartsWagered = heartsToWager === player.hp
 
         if (multiplayerContext === "pleb") {
           const thisPlayer = players.indexOf(player)
@@ -362,6 +364,10 @@ class MoonShine extends Alcohol {
         //One Extra Damage Is Always Done
         playerDamaged.damage(heartsWagered - 1)
         msg = `${heartsWagered} Damage Dealt`
+
+        if (this.allHeartsWagered) {
+          achi.laterRegi("Game Of Chance", "bronze")
+        }
       }
       else {
         player.damage(heartsWagered)

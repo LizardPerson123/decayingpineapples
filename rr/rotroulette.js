@@ -192,6 +192,7 @@ class Player {
     this.name = name
     this.id = generateRandomCode(10, 0, 9)
     this.alcoholEffects = []
+    this.hasBeenDamaged = false
   }
 
   async turn(addAlcohol = true) {
@@ -468,9 +469,15 @@ class Player {
   }
 
   damage(hp, attacker) {
+    const oldHP = this.hp
+
     this.hp -= hp
    
     let msg = this.runEffectsDamage(attacker)
+
+    if (oldHP > this.hp) {
+      this.hasBeenDamaged = true
+    }
 
     getById(`${this.id}LifeImages`).innerHTML = ""
 
@@ -480,6 +487,29 @@ class Player {
 
     if (this.hp < 1) {
       this.removeEffects()
+    }
+    
+    const playersThatAreHuman = players.filter(function(player) {
+      return player instanceof Human
+    })
+
+    playersThatAreHuman.forEach(function(player, index) {
+      playersThatAreHuman[index] = player.name
+    })
+    
+    if (attacker instanceof FratBro && this.hp < 1 && playersThatAreHuman.includes(attacker.playerToNotAttack) && !host) {
+      achi.laterRegi("Teamwork", "silver")
+    }
+
+    // Check For Achievement
+    if (players.getAlivePlayers().length < 2) {
+      const playerHasGuranteedLive = attacker.alcoholEffects.filter((item) => {
+        return item.name === "Guranteed Live"
+      })
+
+      if (playerHasGuranteedLive.length > 0 && attacker.name !== this.name && attacker instanceof Human) {
+        achi.laterRegi("Guranteed Win", "bronze")
+      }
     }
 
     return msg
@@ -526,14 +556,6 @@ class Human extends Player {
 
     for (let i = 1; i <= this.hp; i++) {
       getById("lifeImage").innerHTML += '<img width="50em" src="images/life.png">'
-    }
-
-    if (this.hp < 1) {
-      players.forEach(function(player) {
-        if (player.playerToNotAttack === this.name && player.hp > 0) {
-          achi.laterRegi("Friendship", "bronze")
-        }
-      }.bind(this))
     }
 
     return msg
