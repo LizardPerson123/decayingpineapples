@@ -250,3 +250,10 @@ body {overscroll-behavior: none;}
 
   .enemyOption:hover, .campaignOption:hover {opacity: 0.6; cursor: pointer}
 }
+
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none
+}

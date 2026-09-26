@@ -588,12 +588,12 @@
         <input type="button" id="join" name="joinOrNew" value="Join Session" style="margin-bottom: 30px; border: solid; background: none; font-size: 1.5em;"><br>
       </div>
       <label for="username" style="font-size: 1.5em; margin-bottom: 10px;">Username:</label><br>
-      <input type="text" id="username" class="inputBox" name="username" ><br>
+      <input autocomplete="off" autocorrect="off" autocapitalize="none" type="text" id="username" class="inputBox" name="username" ><br>
       <label for="password" style="font-size: 1.5em; margin-bottom: 10px;">Password:</label><br>
-      <input type="text" id="password" name="password" class="inputBox"><br>
+      <input autocomplete="off" autocorrect="off" autocapitalize="none" type="text" id="password" name="password" class="inputBox"><br>
 
       <label for="sessionCode" style="font-size: 1.5em; display: none; margin-bottom: 10px;" id="sessionCodeText">Session Code:</label><br>
-      <input type="text" id="sessionCode" name="sessionCode" class="inputBox" style="display: none;" onkeypress="return isNumberKey(event)"><br>
+      <input autocomplete="off" autocorrect="off" autocapitalize="none" type="text" id="sessionCode" name="sessionCode" class="inputBox" style="display: none;" onkeypress="return isNumberKey(event)"><br>
 
       <button id="startMultiplayer">Start</button>
       <button style="margin-top: 8px;" onclick="getById('multiplayerMenu').style.display = 'none'; getById('startGame').style.display = 'flex'" id="goBackFromOnline">Back</button>
