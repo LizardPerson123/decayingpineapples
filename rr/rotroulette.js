@@ -502,7 +502,7 @@ class Player {
     }
 
     // Check For Achievement
-    if (players.getAlivePlayers().length < 2) {
+    if (players.getAlivePlayers().length < 2 && attacker) {
       const playerHasGuranteedLive = attacker.alcoholEffects.filter((item) => {
         return item.name === "Guranteed Live"
       })
