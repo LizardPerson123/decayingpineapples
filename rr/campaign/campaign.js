@@ -465,8 +465,8 @@ async function shortcutUI() {
 }
 
 function createCPUSCampaign() {
-  const level1CPUS = [0, 1]
-  const level2CPUS = [2, 3]
+  const level1CPUS = [0]
+  const level2CPUS = [1, 2, 3]
   const level3CPUS = [4, 5]
 
   let numberOfPlayers
